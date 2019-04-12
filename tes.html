@@ -70,7 +70,12 @@
                     <h4 v-if="time"> <i> time : {{time}} </i></h4>
                 </b-col>
             </b-row>
+            <b-row style="display:flex;justify-content:center">
+                <button type="button" class="btn btn-success mt-4" style="width: 95%" onclick="clickImage()">create image</button>
+            </b-row>
+        </b-container>
 
+        <b-container>
             <b-row class="my-4">
                 <b-col>
                     <label for="Male">Male Name:</label>
@@ -94,6 +99,7 @@
             </b-row>
 
             <b-row class="my-4">
+                <p> Wedding time : </p>
                 <b-col style="display:flex;justify-content:center">
                     <v-date-picker v-model="date" landscape=true header-color=blue color=blue></v-date-picker>
                 </b-col>
@@ -106,9 +112,8 @@
             <input id="location" type="hidden">
             <input id="latmap" type="hidden">
             <input id="lngmap" type="hidden">
-            
         </b-container>
-        <button type="button" @click="submit_map"> Add Map Location </button>
+
     </div>
 
 
@@ -150,6 +155,7 @@
 
 <script>
     function clickImage() {
+
         html2canvas(document.getElementById('front-card'), {
             allowTaint: true
         }).then(function (canvas) {
