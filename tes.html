@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- css vuetify -->
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
+
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+
+    <script src="https://unpkg.com/@babel/polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+        #map {
+            height: 425px;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+
+        <b-container id="front-card" style="display:flex" class="card my-5" style="border:solid black 1px">
+            <b-row>
+                <b-col>
+                    <div class="google-map">
+                        <img :src="src">
+                    </div>
+                </b-col>
+
+                <b-col>
+                    <div> {{male_name}} with {{female_name}}</div>
+                </b-col>
+            </b-row>
+
+
+            <b-row class="my-4">
+                <b-col>
+                    <label for="Male">Male Name:</label>
+                    <b-form-input placeholder="male" v-model="male_name"></b-form-input>
+                </b-col>
+            </b-row>
+
+            <b-row class="my-4">
+                <b-col>
+                    <label for="female">Female Name:</label>
+                    <b-form-input placeholder="female" v-model="female_name"></b-form-input>
+                </b-col>
+            </b-row>
+
+            <b-row class="my-4">
+                <b-col>
+                    <label for="">Wedding location:</label>
+                    <div id="map"></div>
+                </b-col>
+            </b-row>
+
+            <b-row class="my-4">
+                <b-col style="display:flex;justify-content:center">
+                    <v-date-picker v-model="date" landscape=true header-color=blue color=blue></v-date-picker>
+                </b-col>
+                <b-col style="display:flex;justify-content:center">
+                    <v-time-picker v-model="time" landscape=true color=blue></v-time-picker>
+                </b-col>
+
+            </b-row>
+
+            <input id="location" @change='getlocation'>
+            <input id="latmap" type="">
+            <input id="lngmap" type="">
+
+            <p>{{date}}</p>
+            <p>{{time}}</p>
+            <p>{{location}}</p>
+
+        </b-container>
+
+        <button type="button" @click="submit_map"> Add Map Location </button>
+    </div>
+
+
+</body>
+<!-- component -->
+<script src="./component/map.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            male_name: '',
+            female_name: '',
+            date: '',
+            location: '',
+            date: new Date().toISOString().substr(0, 10),
+            time: '',
+            lat: '-6.3088',
+            lng: '106.8456',
+            src:''
+            
+        },
+        created(){
+            this.src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=14&size=600x450&key=AIzaSyDuGX_Vysl7PQnkIys6x4pOV4nbzxJQImU`
+        },
+        methods: {
+            getlocation: function () {
+                this.location = document.getElementById('location').value
+                
+            },
+            submit_map: function(){
+                this.lat = document.getElementById('latmap').value
+                this.lng = document.getElementById('lngmap').value
+
+                this.src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=16&size=600x450&key=AIzaSyDuGX_Vysl7PQnkIys6x4pOV4nbzxJQImU`
+            }
+        }
+    })
+</script>
+
+<script>
+    function clickImage() {
+        html2canvas(document.getElementById('front-card'), {
+            allowTaint: true
+        }).then(function (canvas) {
+            document.body.appendChild(canvas);
+        });
+    }
+</script>
+
+<script src="google-map.js"></script>
+<script src="./html2canvas.js"></script>
+
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuGX_Vysl7PQnkIys6x4pOV4nbzxJQImU&callback=initMap">
+</script>
+
+
+
+
+
+</html>
