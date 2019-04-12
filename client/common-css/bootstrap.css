@@ -761,6 +761,27 @@ pre code {
   padding-right: 15px;
   padding-left: 15px;
 }
+.logoWedding {
+  max-width:20%;
+  height:auto;
+  display: inline-block
+  
+}
+.column {
+  float: left;
+  width: 25%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+  max-width:10%;
+  height:auto;
+  display: inline-block
+}
 
 @media (min-width: 576px) {
   .container {
