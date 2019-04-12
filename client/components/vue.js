@@ -15,7 +15,9 @@ new Vue({
         selected:'',
         message: "Hello Vue!",
         imageS: null,
-        url: null
+        url: null,
+        imageOne:'',
+        imageTwo:''
     },
     created(){
         this.src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=14&size=600x450&key=AIzaSyDuGX_Vysl7PQnkIys6x4pOV4nbzxJQImU`
