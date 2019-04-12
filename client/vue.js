@@ -20,7 +20,7 @@ new Vue({
     url: null,
     seen: true,
     imageOne: '',
-    imageTwo: ''
+    imageTwo: '',
   },
   created() {
     this.src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=14&size=600x450&key=AIzaSyDuGX_Vysl7PQnkIys6x4pOV4nbzxJQImU`
@@ -76,11 +76,14 @@ new Vue({
               data
             }) => {
               this.seen = false
-              this.imageOne = data
+              this.imageTwo = data
             });
         });
       });
 
+    },
+    gettwitter(){
+      return `https://Twitter.com/intent/tweet?text=${this.imageTwo}`
     }
   }
 })

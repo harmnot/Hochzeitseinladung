@@ -18,6 +18,12 @@
     <!-- Vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+     <!-- share link -->
+     <script src=“https://cdn.jsdelivr.net/npm/vue-social-share@0.0.3/dist/vue-social-share.min.js” charset=“utf-8"></script>
+  
+
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
     <!-- Bootstrap -->
     <link
       type="text/css"
@@ -193,14 +199,18 @@
 
       <b-container v-if='!(seen)' class="card">
         <b-row class="my-4">
-            <img :src="imageOne">
-        </b-row>
-        <b-row>
             <img :src="imageTwo">
+            <div style="height:30px">
+                  <a :href="gettwitter()">  <i class="fab fa-twitter-square fa-3x"></i> </a>
+            </div>
         </b-row>
+        <!-- <b-row>
+            <img :src="imageTwo">
+        </b-row> -->
       </b-container>
 
     </div>
+   
   </body>
   <!-- component -->
   <script src="./components/add-name.js"></script>
