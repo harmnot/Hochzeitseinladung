@@ -42,7 +42,7 @@
 
 <body>
     <div id="app">
-
+    
         <b-container id="front-card" style="display:flex" class="card my-5" style="border:solid black 1px">
             <b-row>
                 <b-col>
@@ -52,10 +52,24 @@
                 </b-col>
 
                 <b-col>
-                    <div> {{male_name}} with {{female_name}}</div>
+                    <h1>
+                        {{male_name}} 
+                    </h1>
+                    <h2 v-if="male_name && female_name">
+                        with
+                    </h2>
+                    <h1>
+                        {{female_name}} 
+                    </h1>
+                    <h4 v-if='location'>
+                        <i> Location : {{location}}</i>
+                    </h4>
+                    <h4 v-if="date">
+                        <i> date : {{date}}</i>
+                    </h4>
+                    <h4 v-if="time"> <i> time : {{time}} </i></h4>
                 </b-col>
             </b-row>
-
 
             <b-row class="my-4">
                 <b-col>
@@ -75,6 +89,7 @@
                 <b-col>
                     <label for="">Wedding location:</label>
                     <div id="map"></div>
+                    <button class="btn btn-danger my-4" @click="submit_map" style="width:100%"> Submit Location </button>
                 </b-col>
             </b-row>
 
@@ -88,16 +103,11 @@
 
             </b-row>
 
-            <input id="location" @change='getlocation'>
-            <input id="latmap" type="">
-            <input id="lngmap" type="">
-
-            <p>{{date}}</p>
-            <p>{{time}}</p>
-            <p>{{location}}</p>
-
+            <input id="location" type="hidden">
+            <input id="latmap" type="hidden">
+            <input id="lngmap" type="hidden">
+            
         </b-container>
-
         <button type="button" @click="submit_map"> Add Map Location </button>
     </div>
 
@@ -116,7 +126,7 @@
             female_name: '',
             date: '',
             location: '',
-            date: new Date().toISOString().substr(0, 10),
+            date: '',
             time: '',
             lat: '-6.3088',
             lng: '106.8456',
@@ -127,15 +137,12 @@
             this.src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=14&size=600x450&key=AIzaSyDuGX_Vysl7PQnkIys6x4pOV4nbzxJQImU`
         },
         methods: {
-            getlocation: function () {
-                this.location = document.getElementById('location').value
-                
-            },
             submit_map: function(){
                 this.lat = document.getElementById('latmap').value
                 this.lng = document.getElementById('lngmap').value
+                this.location = document.getElementById('location').value
 
-                this.src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=16&size=600x450&key=AIzaSyDuGX_Vysl7PQnkIys6x4pOV4nbzxJQImU`
+                this.src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=16&size=600x450&markers=color:red%7C${this.lat},${this.lng}&key=AIzaSyDuGX_Vysl7PQnkIys6x4pOV4nbzxJQImU`
             }
         }
     })
