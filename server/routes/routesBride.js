@@ -1,28 +1,7 @@
-const express = require("express");
-const router = express.Router();
-// const Multer = require("multer");
-// const upload = multer();
-// const {
-//   getPublicUrl,
-//   sendUploadToGCS,
-//   multer
-// } = require("../helper/google-cloud-storages.js");
-// const Controller = require("../controller/bride.js");
-//
-// router.post(
-//   "/upload",
-//   multer.single("image"),
-//   sendUploadToGCS,
-//   (req, res, next) => {
-//     res.send({
-//       status: 200,
-//       link: req.file.cloudStoragePublicUrl
-//     });
-//   }
-// );
-
-const Multer = require("multer");
-const gcsMiddlewares = require("../middleware/google-cloud-storage.js");
+const express = require("express"),
+  router = express.Router(),
+  Multer = require("multer"),
+  gcsMiddlewares = require("../middleware/google-cloud-storage.js");
 
 const multer = Multer({
   storage: Multer.MemoryStorage,
@@ -36,8 +15,9 @@ router.post(
   multer.single("image"),
   gcsMiddlewares.sendUploadToGCS,
   (req, res, next) => {
+    console.log(req.file, "ini req file");
     if (req.file && req.file.gcsUrl) {
-      return res.send(req.file.gcsUrl);
+      res.send(req.file.gcsUrl);
     }
 
     return res.status(500).send("Unable to upload");

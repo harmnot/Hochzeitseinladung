@@ -23,7 +23,8 @@ const brideSchema = new Schema(
     location: {
       type: String,
       required: [true, "where is your wedding at ?"]
-    }
+    },
+    data: []
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
