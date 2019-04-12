@@ -22,19 +22,20 @@
     <script src="https://unpkg.com/vue@latest/dist/vue.min.js"></script>
     <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
 
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Comfortaa|Dancing+Script|Dosis|Indie+Flower|Muli|Oxygen" rel="stylesheet">
+
     <style>
-        /* Always set the map height explicitly to define the size of the div
-             * element that contains the map. */
         #map {
             height: 425px;
         }
 
-        /* Optional: Makes the sample page fill the window. */
         html,
         body {
             height: 100%;
             margin: 0;
             padding: 0;
+            font-family: 'Comfortaa', cursive;
         }
     </style>
 
@@ -42,40 +43,55 @@
 
 <body>
     <div id="app">
-    
-        <b-container id="front-card" style="display:flex" class="card my-5" style="border:solid black 1px">
+        <b-container id="front-card" style="display:flex" class="card my-5" >
             <b-row>
-                <b-col>
+                <b-col style="overflow:hidden">
                     <div class="google-map">
                         <img :src="src">
                     </div>
                 </b-col>
 
-                <b-col>
-                    <h1>
-                        {{male_name}} 
-                    </h1>
-                    <h2 v-if="male_name && female_name">
-                        with
-                    </h2>
-                    <h1>
-                        {{female_name}} 
-                    </h1>
-                    <h4 v-if='location'>
-                        <i> Location : {{location}}</i>
-                    </h4>
-                    <h4 v-if="date">
-                        <i> date : {{date}}</i>
-                    </h4>
-                    <h4 v-if="time"> <i> time : {{time}} </i></h4>
-                </b-col>
-            </b-row>
-            <b-row style="display:flex;justify-content:center">
-                <button type="button" class="btn btn-success mt-4" style="width: 95%" onclick="clickImage()">create image</button>
+                <add-detail v-bind:male_name="male_name"
+                    v-bind:female_name="female_name"
+                    v-bind:location="location"
+                    v-bind:date="date"
+                    v-bind:time="time"
+                    v-bind:font="font"
+                    
+                ></add-detail>
             </b-row>
         </b-container>
 
-        <b-container>
+        <b-container id='photo_card' class="my-4 card">
+            <b-row  >
+                <b-col>
+                    <h1>asdasidasidbasuidba</h1>
+                </b-col>
+                <b-col>
+                    <h1> Happyy Wedding</h1>
+                </b-col>
+            </b-row>
+        </b-container>
+
+        <b-container class="card" style="margin-bottom:10%">
+            <b-row style="display:flex;justify-content:center">
+                <button type="button" class="btn btn-success" style="width: 95%" onclick="clickImage()">create image</button>
+            </b-row>
+            <b-row class="my-2">
+                <b-col>
+                    <label for="select_font">Select Font:</label>
+                    <b-form-select v-model="selected" class="mb-3" id="select_font">
+                        <option value="Muli" >Muli</option>
+                        <option value="Dosis" >Dosis</option>
+                        <option value="Oxygen" >Oxygen</option>
+                        <option value="Indie Flower" >Indie Flower</option>
+                        <option value="Dancing Script" >Dancing</option>
+                        <option value="Amatic SC" >Atomic</option>
+                        <option value="Comfortaa">Comforta</option>
+                    </b-form-select>
+                </b-col>
+            </b-row>
+
             <b-row class="my-4">
                 <b-col>
                     <label for="Male">Male Name:</label>
@@ -86,11 +102,11 @@
             <b-row class="my-4">
                 <b-col>
                     <label for="female">Female Name:</label>
-                    <b-form-input placeholder="female" v-model="female_name"></b-form-input>
+                    <b-form-input placeholder="female" v-model="female_name" id="female"></b-form-input>
                 </b-col>
             </b-row>
 
-            <b-row class="my-4">
+            <b-row class="my-2">
                 <b-col>
                     <label for="">Wedding location:</label>
                     <div id="map"></div>
@@ -98,7 +114,7 @@
                 </b-col>
             </b-row>
 
-            <b-row class="my-4">
+            <b-row class="my-2">
                 <p> Wedding time : </p>
                 <b-col style="display:flex;justify-content:center">
                     <v-date-picker v-model="date" landscape=true header-color=blue color=blue></v-date-picker>
@@ -106,60 +122,30 @@
                 <b-col style="display:flex;justify-content:center">
                     <v-time-picker v-model="time" landscape=true color=blue></v-time-picker>
                 </b-col>
-
             </b-row>
 
             <input id="location" type="hidden">
             <input id="latmap" type="hidden">
             <input id="lngmap" type="hidden">
         </b-container>
-
     </div>
 
 
 </body>
 <!-- component -->
-<script src="./component/map.js"></script>
+<script src="./components/add-name.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 
-<script>
-    new Vue({
-        el: "#app",
-        data: {
-            male_name: '',
-            female_name: '',
-            date: '',
-            location: '',
-            date: '',
-            time: '',
-            lat: '-6.3088',
-            lng: '106.8456',
-            src:''
-            
-        },
-        created(){
-            this.src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=14&size=600x450&key=AIzaSyDuGX_Vysl7PQnkIys6x4pOV4nbzxJQImU`
-        },
-        methods: {
-            submit_map: function(){
-                this.lat = document.getElementById('latmap').value
-                this.lng = document.getElementById('lngmap').value
-                this.location = document.getElementById('location').value
-
-                this.src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.lat},${this.lng}&zoom=16&size=600x450&markers=color:red%7C${this.lat},${this.lng}&key=AIzaSyDuGX_Vysl7PQnkIys6x4pOV4nbzxJQImU`
-            }
-        }
-    })
-</script>
+<script src="./vue.js"></script>
 
 <script>
     function clickImage() {
-
         html2canvas(document.getElementById('front-card'), {
             allowTaint: true
         }).then(function (canvas) {
             document.body.appendChild(canvas);
+           
         });
     }
 </script>
