@@ -19,7 +19,6 @@ router.post(
     if (req.file && req.file.gcsUrl) {
       res.send(req.file.gcsUrl);
     }
-
     return res.status(500).send("Unable to upload");
   }
 );
